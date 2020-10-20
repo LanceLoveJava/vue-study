@@ -1,4 +1,6 @@
 # vue-study
+vue练习项目
+ui框架iView
 
 ## Project setup
 ```
