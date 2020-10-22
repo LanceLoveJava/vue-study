@@ -10,23 +10,23 @@
 
 <script>
 export default {
-  data() {
-    return {};
-  },
-  computed: {
-    key() {
-      return this.$route.path;
-    }
-  },
-  mounted() {},
-  methods: {}
-};
+    data() {
+        return {}
+    },
+    computed: {
+        key() {
+            return this.$route.path
+        }
+    },
+    mounted() {},
+    methods: {}
+}
 </script>
 
 <style scoped lang="scss">
 .app-main {
-  width: 100%;
-  height: 100%;
+  min-height: 100%;
   margin-left: 200px;
+  overflow: hidden;
 }
 </style>

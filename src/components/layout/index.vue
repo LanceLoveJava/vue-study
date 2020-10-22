@@ -13,18 +13,18 @@
 </template>
 
 <script>
-  import { AppMain, Nav, Sider } from './components'
+import { AppMain, Nav, Sider } from './components'
 export default {
-  name: "index",
-  data() {
-    return {};
-  },
-  components: {
-    AppMain, Nav, Sider
-  },
-  mounted() {},
-  methods: {}
-};
+    name: 'Index',
+    data() {
+        return {}
+    },
+    components: {
+        AppMain, Nav, Sider
+    },
+    mounted() {},
+    methods: {}
+}
 </script>
 
 <style scoped lang="scss">

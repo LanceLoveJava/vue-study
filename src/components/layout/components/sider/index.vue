@@ -1,48 +1,50 @@
 <template>
-  <div class="">
-    <Sider hide-trigger class="custom-sider">
-      <Menu active-name="1" theme="light" width="auto" :open-names="['1']">
-        <template v-for="(group, $index) in routes">
-          <MenuGroup :title="group.meta && group.meta.title" :key="$index">
-            <template v-if="group.children && group.children.length > 0">
-              <Submenu name="1">
-                <template slot="title">
-                  <Icon type="ios-cog" />
-                  动画效果
-                </template>
-                <MenuItem name="4-4" to="/css/zhuang">旋转</MenuItem>
-              </Submenu>
+    <Sider v-model="siderOff" hide-trigger collapsible :collapsed-width="79" class="custom-sider">
+      <Menu :active-name="activeName" theme="light" mode="vertical" width="auto" :class="menuitemClasses">
+        <template v-for="(item, $index) in routes">
+          <MenuGroup :title="item.meta && item.meta.title" :key="$index">
+            <template v-for="(chil, index) in item.children">
+              <siderItem :item="chil" :key="index" :base-path="item.path"></siderItem>
             </template>
-            <MenuItem name="3" v-else :to="group.path">
-              <Icon type="md-document" />
-              FAQ
-            </MenuItem>
           </MenuGroup>
         </template>
       </Menu>
     </Sider>
-  </div>
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
+import siderItem from './siderItem'
 export default {
-  name: "index",
-  data() {
-    return {
-      menus: [
-
-      ]
-    };
-  },
-  computed: {
-    ...mapGetters([ 'routes' ])
-  },
-  mounted() {
-    console.log(this.routes)
-  },
-  methods: {}
-};
+    data() {
+        return {
+            menus: []
+        }
+    },
+    components: {
+        siderItem
+    },
+    computed: {
+        ...mapGetters(['routes', 'siderOff']),
+        activeName: function() {
+            return this.$route.meta.title
+        },
+        menuitemClasses: function() {
+            return [
+                'menu-item',
+                this.siderOff ? 'collapsed-menu' : ''
+            ]
+        }
+    },
+    mounted() {
+        console.log(this.routes)
+    },
+    methods: {
+        isCollapse() {
+            return !this.siderOff
+        }
+    }
+}
 </script>
 
 <style scoped lang="scss">
@@ -52,5 +54,33 @@ export default {
     position: absolute;
     top: 0;
     left: 0;
+      ::v-deep .menu-item {
+          span{
+              display: inline-block;
+              overflow: hidden;
+              width: 69px;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              vertical-align: bottom;
+              transition: width .2s ease .2s;
+          }
+      }
+      ::v-deep .collapsed-menu span{
+          width: 0px;
+          transition: width .2s ease;
+      }
+  }
+  .menu-item i{
+      transform: translateX(0px);
+      transition: font-size .2s ease, transform .2s ease;
+      vertical-align: middle;
+      font-size: 16px;
+  }
+
+  .collapsed-menu i{
+      transform: translateX(5px);
+      transition: font-size .2s ease .2s, transform .2s ease .2s;
+      vertical-align: middle;
+      font-size: 22px;
   }
 </style>
